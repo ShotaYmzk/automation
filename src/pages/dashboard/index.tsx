@@ -138,7 +138,7 @@ const Dashboard: React.FC = () => {
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value) => `$${value.toFixed(2)}`} />
+                <Tooltip formatter={(value) => Number(value).toFixed(2)} />
                 <Legend />
               </PieChart>
             </ResponsiveContainer>
@@ -165,7 +165,7 @@ const Dashboard: React.FC = () => {
                   <TableCell>{item.workflow}</TableCell>
                   <TableCell>
                     <Chip
-                      color={statusColorMap[item.status as keyof typeof statusColorMap]}
+                      color={statusColorMap[item.status as keyof typeof statusColorMap] as 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger'}
                       variant="flat"
                       size="sm"
                     >

@@ -222,7 +222,7 @@
       "connectorsNotInstalled": "一部の必要なコネクタがインストールされていません。",
       "installAndCustomize": "インストールしてカスタマイズ"
     },
-    "agentsPage": {
+    "": {
       "title": "エージェント / RAGビルダー",
       "subtitle": "検索拡張生成（RAG）でAIエージェントを作成・設定します",
       "chatHistory": "チャット履歴",

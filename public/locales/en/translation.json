@@ -274,7 +274,8 @@
     "addCustomTool": "Add Custom Tool",
     "saveDraft": "Save Draft",
     "saveAndDeploy": "Save & Deploy",
-    "simulatedResponse": "I'm processing your request. This is a simulated response from the RAG-enabled agent."
+    "simulatedResponse": "I'm processing your request. This is a simulated response from the RAG-enabled agent.",
+    "testAgent": "Test your agent with example queries" 
   },
   "runsLogsPage": {
     "title": "Runs & Logs",
