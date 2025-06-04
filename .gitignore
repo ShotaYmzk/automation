@@ -1,3 +1,4 @@
+# --- existing ---
 node_modules/
 logs
 *.log
@@ -11,6 +12,15 @@ build/
 .vite/
 .env
 .env.*
+!.env.example     # ★サンプルだけ残す
 .vscode/
 .idea/
 coverage/
+
+# --- extras (optional) ---
+*.tsbuildinfo
+.npmrc             # ★認証トークンを入れる場合だけ
+.pnpm-debug.log*
+*.tgz
+*.sw?
+.turbo/
