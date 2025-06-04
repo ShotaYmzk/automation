@@ -3,6 +3,7 @@ import { Card, CardBody, CardFooter, Button, Input, Select, SelectItem, Checkbox
 import { Icon } from '@iconify/react';
 import { useHistory } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 interface Connector {
   id: string;
@@ -97,6 +98,8 @@ const Onboarding: React.FC = () => {
   
   const [orgName, setOrgName] = React.useState('');
   const [industry, setIndustry] = React.useState<string>('');
+  
+  const { t } = useTranslation();
   
   const handleConnectorToggle = (connectorId: string) => {
     if (selectedConnectors.includes(connectorId)) {
@@ -203,21 +206,22 @@ const Onboarding: React.FC = () => {
                   />
                   
                   <Select
-                    label="Industry"
-                    placeholder="Select your industry"
+                    label={t('onboardingPage.industry')}
+                    placeholder={t('onboardingPage.selectIndustry')}
                     selectedKeys={industry ? [industry] : []}
                     onSelectionChange={(keys) => {
                       const selected = Array.from(keys)[0] as string;
                       setIndustry(selected);
                     }}
                     isRequired
+                    aria-label={t('onboardingPage.industry')}
                   >
-                    <SelectItem key="technology" value="technology">Technology</SelectItem>
-                    <SelectItem key="finance" value="finance">Finance</SelectItem>
-                    <SelectItem key="healthcare" value="healthcare">Healthcare</SelectItem>
-                    <SelectItem key="education" value="education">Education</SelectItem>
-                    <SelectItem key="retail" value="retail">Retail</SelectItem>
-                    <SelectItem key="manufacturing" value="manufacturing">Manufacturing</SelectItem>
+                    <SelectItem key="technology">{t('onboardingPage.industries.technology')}</SelectItem>
+                    <SelectItem key="finance">{t('onboardingPage.industries.finance')}</SelectItem>
+                    <SelectItem key="healthcare">{t('onboardingPage.industries.healthcare')}</SelectItem>
+                    <SelectItem key="education">{t('onboardingPage.industries.education')}</SelectItem>
+                    <SelectItem key="retail">{t('onboardingPage.industries.retail')}</SelectItem>
+                    <SelectItem key="manufacturing">{t('onboardingPage.industries.manufacturing')}</SelectItem>
                   </Select>
                   
                   <div className="flex items-center gap-2 pt-2">

@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardBody, CardHeader, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button, Input, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Select, SelectItem } from '@heroui/react';
 import { Icon } from '@iconify/react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
+import { useTranslation } from 'react-i18next';
 
 // Sample data for charts
 const dailyTokenData = [
@@ -40,6 +41,7 @@ const workflowCostData = [
 const CostAnalytics: React.FC = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [dateRange, setDateRange] = React.useState('last15');
+  const { t } = useTranslation();
   
   const handleDateRangeChange = (range: string) => {
     setDateRange(range);
@@ -61,12 +63,13 @@ const CostAnalytics: React.FC = () => {
               handleDateRangeChange(selected);
             }}
             className="w-40"
+            aria-label={t('common.select') + ' ' + t('costAnalyticsPage.dateRange.today')}
           >
-            <SelectItem key="today" value="today">Today</SelectItem>
-            <SelectItem key="last7" value="last7">Last 7 days</SelectItem>
-            <SelectItem key="last15" value="last15">Last 15 days</SelectItem>
-            <SelectItem key="last30" value="last30">Last 30 days</SelectItem>
-            <SelectItem key="custom" value="custom">Custom Range</SelectItem>
+            <SelectItem key="today">{t('costAnalyticsPage.dateRange.today')}</SelectItem>
+            <SelectItem key="last7">{t('costAnalyticsPage.dateRange.last7Days')}</SelectItem>
+            <SelectItem key="last15">{t('costAnalyticsPage.dateRange.last15Days')}</SelectItem>
+            <SelectItem key="last30">{t('costAnalyticsPage.dateRange.last30Days')}</SelectItem>
+            <SelectItem key="custom">{t('costAnalyticsPage.dateRange.customRange')}</SelectItem>
           </Select>
           
           <Button
@@ -207,14 +210,15 @@ const CostAnalytics: React.FC = () => {
               <ModalHeader className="flex flex-col gap-1">Set Cost Alert</ModalHeader>
               <ModalBody>
                 <Select
-                  label="Alert Type"
-                  placeholder="Select alert type"
+                  label={t('costAnalyticsPage.alertType')}
+                  placeholder={t('costAnalyticsPage.selectAlertType')}
                   defaultSelectedKeys={["daily"]}
+                  aria-label={t('costAnalyticsPage.alertType')}
                 >
-                  <SelectItem key="daily" value="daily">Daily Cost Limit</SelectItem>
-                  <SelectItem key="weekly" value="weekly">Weekly Cost Limit</SelectItem>
-                  <SelectItem key="monthly" value="monthly">Monthly Cost Limit</SelectItem>
-                  <SelectItem key="workflow" value="workflow">Per Workflow Limit</SelectItem>
+                  <SelectItem key="daily">{t('costAnalyticsPage.dailyCostLimit')}</SelectItem>
+                  <SelectItem key="weekly">{t('costAnalyticsPage.weeklyCostLimit')}</SelectItem>
+                  <SelectItem key="monthly">{t('costAnalyticsPage.monthlyCostLimit')}</SelectItem>
+                  <SelectItem key="workflow">{t('costAnalyticsPage.perWorkflowLimit')}</SelectItem>
                 </Select>
                 
                 <Input
@@ -230,13 +234,14 @@ const CostAnalytics: React.FC = () => {
                 />
                 
                 <Select
-                  label="Notification Method"
-                  placeholder="Select notification method"
+                  label={t('costAnalyticsPage.notificationMethod')}
+                  placeholder={t('costAnalyticsPage.selectNotificationMethod')}
                   defaultSelectedKeys={["email"]}
+                  aria-label={t('costAnalyticsPage.notificationMethod')}
                 >
-                  <SelectItem key="email" value="email">Email</SelectItem>
-                  <SelectItem key="slack" value="slack">Slack</SelectItem>
-                  <SelectItem key="webhook" value="webhook">Webhook</SelectItem>
+                  <SelectItem key="email">{t('costAnalyticsPage.email')}</SelectItem>
+                  <SelectItem key="slack">{t('costAnalyticsPage.slack')}</SelectItem>
+                  <SelectItem key="webhook">{t('costAnalyticsPage.webhook')}</SelectItem>
                 </Select>
                 
                 <Input

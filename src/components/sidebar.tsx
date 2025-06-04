@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button, Tooltip } from '@heroui/react';
 import { Icon } from '@iconify/react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next'; // i18nextフックをインポート
 
 interface SidebarProps {
   collapsed: boolean;
@@ -11,24 +12,25 @@ interface SidebarProps {
 
 interface NavItem {
   path: string;
-  label: string;
+  translationKey: string; // labelの代わりにtranslationKeyを使用
   icon: string;
 }
 
-const navItems: NavItem[] = [
-  { path: '/dashboard', label: 'Dashboard', icon: 'lucide:layout-dashboard' },
-  { path: '/builder', label: 'Builder', icon: 'lucide:workflow' },
-  { path: '/connectors', label: 'Connectors', icon: 'lucide:plug' },
-  { path: '/templates', label: 'Templates', icon: 'lucide:template' },
-  { path: '/agents', label: 'Agents / RAG', icon: 'lucide:bot' },
-  { path: '/runs-logs', label: 'Runs & Logs', icon: 'lucide:list-checks' },
-  { path: '/cost-analytics', label: 'Cost Analytics', icon: 'lucide:bar-chart-2' },
-  { path: '/settings', label: 'Settings', icon: 'lucide:settings' },
-  { path: '/help', label: 'Help', icon: 'lucide:help-circle' },
-];
-
 const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggleCollapse }) => {
+  const { t } = useTranslation(); // t関数を取得
   const location = useLocation();
+
+  const navItems: NavItem[] = [
+    { path: '/dashboard', translationKey: 'sidebar.dashboard', icon: 'lucide:layout-dashboard' },
+    { path: '/builder', translationKey: 'sidebar.builder', icon: 'lucide:workflow' },
+    { path: '/connectors', translationKey: 'sidebar.connectors', icon: 'lucide:plug' },
+    { path: '/templates', translationKey: 'sidebar.templates', icon: 'lucide:template' },
+    { path: '/agents', translationKey: 'sidebar.agents', icon: 'lucide:bot' },
+    { path: '/runs-logs', translationKey: 'sidebar.runsLogs', icon: 'lucide:list-checks' },
+    { path: '/cost-analytics', translationKey: 'sidebar.costAnalytics', icon: 'lucide:bar-chart-2' },
+    { path: '/settings', translationKey: 'sidebar.settings', icon: 'lucide:settings' },
+    { path: '/help', translationKey: 'sidebar.help', icon: 'lucide:help-circle' },
+  ];
   
   const sidebarVariants = {
     expanded: { width: 240 },
@@ -53,7 +55,8 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggleCollapse }) => {
             className="flex items-center"
           >
             <Icon icon="lucide:zap" className="text-primary" width={24} />
-            <span className="ml-2 font-semibold text-lg">Workflow AI</span>
+            {/* <span className="ml-2 font-semibold text-lg">Workflow AI</span> */}
+            <span className="ml-2 font-semibold text-lg">{t('sidebar.aiWorkflowStudio')}</span>
           </motion.div>
         )}
         {collapsed && (
@@ -67,11 +70,12 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggleCollapse }) => {
         <ul className="space-y-1 px-2">
           {navItems.map((item) => {
             const isActive = location.pathname.startsWith(item.path);
+            const label = t(item.translationKey); // 翻訳キーからラベルを取得
             
             return (
               <li key={item.path}>
                 {collapsed ? (
-                  <Tooltip content={item.label} placement="right">
+                  <Tooltip content={label} placement="right">
                     <Button
                       as={Link}
                       to={item.path}
@@ -79,6 +83,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggleCollapse }) => {
                       color={isActive ? 'primary' : 'default'}
                       className="w-full justify-center"
                       isIconOnly
+                      aria-label={label}
                     >
                       <Icon icon={item.icon} width={20} />
                     </Button>
@@ -92,7 +97,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggleCollapse }) => {
                     className="w-full justify-start"
                     startContent={<Icon icon={item.icon} width={20} />}
                   >
-                    {item.label}
+                    {label}
                   </Button>
                 )}
               </li>
@@ -103,11 +108,11 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggleCollapse }) => {
       
       <div className="p-4 border-t border-divider">
         {collapsed ? (
-          <Tooltip content="Expand Sidebar" placement="right">
+          <Tooltip content={t('sidebar.expandSidebar')} placement="right">
             <Button
               isIconOnly
               variant="light"
-              aria-label="Expand sidebar"
+              aria-label={t('sidebar.expandSidebar')}
               onPress={onToggleCollapse}
               className="w-full"
             >
@@ -117,12 +122,12 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggleCollapse }) => {
         ) : (
           <Button
             variant="light"
-            aria-label="Collapse sidebar"
+            aria-label={t('sidebar.collapseSidebar')}
             onPress={onToggleCollapse}
             className="w-full justify-start"
             startContent={<Icon icon="lucide:chevron-left" width={20} />}
           >
-            Collapse
+            {t('sidebar.collapse')}
           </Button>
         )}
       </div>

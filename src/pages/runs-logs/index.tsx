@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Tabs, Tab, Card, CardBody, Button, Drawer, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, useDisclosure } from '@heroui/react';
 import { Icon } from '@iconify/react';
+import { useTranslation } from 'react-i18next';
 
 interface Run {
   id: string;
@@ -97,7 +98,11 @@ const statusColorMap = {
 const RunsLogs: React.FC = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedRun, setSelectedRun] = React.useState<Run | null>(null);
-  const [selectedTab, setSelectedTab] = React.useState('all');
+  const { t } = useTranslation();
+
+  const tabKeys = ['all', 'success', 'failed', 'running', 'canceled'] as const;
+  type TabKey = typeof tabKeys[number];
+  const [selectedTab, setSelectedTab] = React.useState<TabKey>('all');
   
   const filteredRuns = React.useMemo(() => {
     if (selectedTab === 'all') return runs;
@@ -135,15 +140,16 @@ const RunsLogs: React.FC = () => {
       <Card shadow="sm">
         <CardBody className="p-0">
           <Tabs 
-            aria-label="Run status tabs" 
+            aria-label={t('runsLogsPage.runStatusTabs')} 
             selectedKey={selectedTab}
-            onSelectionChange={setSelectedTab as any}
+            onSelectionChange={(key) => setSelectedTab(key as TabKey)}
             className="w-full"
           >
-            <Tab key="all" title="All" />
-            <Tab key="success" title="Success" />
-            <Tab key="failed" title="Failed" />
-            <Tab key="running" title="Running" />
+            <Tab key="all" title={t('runsLogsPage.all')} />
+            <Tab key="success" title={t('runsLogsPage.success')} />
+            <Tab key="failed" title={t('runsLogsPage.failed')} />
+            <Tab key="running" title={t('runsLogsPage.running')} />
+            <Tab key="canceled" title={t('runsLogsPage.canceled')} />
           </Tabs>
           
           <Table 

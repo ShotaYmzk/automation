@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardBody, Tabs, Tab, Input, Textarea, Select, SelectItem, Button, Checkbox, Chip } from '@heroui/react';
 import { Icon } from '@iconify/react';
+import { useTranslation } from 'react-i18next';
 
 interface Message {
   id: string;
@@ -37,6 +38,7 @@ const initialMessages: Message[] = [
 ];
 
 const Agents: React.FC = () => {
+  const { t } = useTranslation();
   const [messages, setMessages] = React.useState<Message[]>(initialMessages);
   const [newMessage, setNewMessage] = React.useState('');
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
@@ -78,8 +80,8 @@ const Agents: React.FC = () => {
   return (
     <div className="h-full flex flex-col">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">Agent / RAG Builder</h1>
-        <p className="text-default-500">Create and configure AI agents with Retrieval Augmented Generation</p>
+        <h1 className="text-2xl font-bold">{t('agentsPage.title')}</h1>
+        <p className="text-default-500">{t('agentsPage.subtitle')}</p>
       </div>
       
       <div className="flex-1 flex flex-col lg:flex-row gap-6 h-full">
@@ -87,8 +89,8 @@ const Agents: React.FC = () => {
         <Card className="w-full lg:w-1/3 h-full">
           <CardBody className="p-0 h-full flex flex-col">
             <div className="p-4 border-b border-divider">
-              <h3 className="font-semibold">Chat History</h3>
-              <p className="text-small text-default-500">Test your agent with example queries</p>
+              <h3 className="font-semibold">{t('agentsPage.chatHistory')}</h3>
+              <p className="text-small text-default-500">{t('agentsPage.testAgent')}</p>
             </div>
             
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -117,7 +119,7 @@ const Agents: React.FC = () => {
             <div className="p-4 border-t border-divider mt-auto">
               <div className="flex gap-2">
                 <Input
-                  placeholder="Type a message..."
+                  placeholder={t('agentsPage.typeMessage')}
                   value={newMessage}
                   onValueChange={setNewMessage}
                   onKeyDown={(e) => {
@@ -142,51 +144,51 @@ const Agents: React.FC = () => {
         {/* Configuration Panel */}
         <Card className="w-full lg:w-2/3 h-full">
           <CardBody className="h-full">
-            <Tabs aria-label="Agent configuration tabs" className="h-full">
+            <Tabs aria-label={t('agentsPage.configTabs')} className="h-full">
               <Tab
                 key="system-prompt"
                 title={
                   <div className="flex items-center gap-1">
                     <Icon icon="lucide:file-text" width={16} />
-                    <span>System Prompt</span>
+                    <span>{t('agentsPage.systemPromptTab')}</span>
                   </div>
                 }
               >
                 <div className="space-y-4 p-2">
                   <Input
-                    label="Agent Name"
-                    placeholder="Enter agent name"
+                    label={t('agentsPage.agentName')}
+                    placeholder={t('agentsPage.enterAgentName')}
                     defaultValue="Sales Data Assistant"
                   />
                   
                   <Select
-                    label="Base Model"
-                    placeholder="Select base model"
+                    label={t('agentsPage.baseModel')}
+                    placeholder={t('agentsPage.selectBaseModel')}
                     defaultSelectedKeys={["gpt4"]}
                   >
-                    <SelectItem key="gpt4" value="gpt4">GPT-4</SelectItem>
-                    <SelectItem key="gpt35" value="gpt35">GPT-3.5 Turbo</SelectItem>
-                    <SelectItem key="claude" value="claude">Claude 3</SelectItem>
-                    <SelectItem key="mistral" value="mistral">Mistral Large</SelectItem>
+                    <SelectItem key="gpt4">GPT-4</SelectItem>
+                    <SelectItem key="gpt35">GPT-3.5 Turbo</SelectItem>
+                    <SelectItem key="claude">Claude 3</SelectItem>
+                    <SelectItem key="mistral">Mistral Large</SelectItem>
                   </Select>
                   
                   <Textarea
-                    label="System Prompt"
-                    placeholder="Enter system prompt"
+                    label={t('agentsPage.systemPrompt')}
+                    placeholder={t('agentsPage.enterSystemPrompt')}
                     defaultValue="You are a helpful assistant that specializes in retrieving and explaining sales data. You have access to the company's sales reports, customer data, and market analysis. Always be concise and accurate. If you don't know something, say so and don't make up information."
                     rows={6}
                   />
                   
                   <div>
-                    <p className="text-small font-medium mb-2">Example Pairs</p>
+                    <p className="text-small font-medium mb-2">{t('agentsPage.examplePairs')}</p>
                     <Card className="mb-4">
                       <CardBody className="gap-2">
                         <div>
-                          <p className="text-small font-medium">User</p>
+                          <p className="text-small font-medium">{t('agentsPage.user')}</p>
                           <p className="text-small p-2 bg-default-100 rounded-md">What were our top selling products last quarter?</p>
                         </div>
                         <div>
-                          <p className="text-small font-medium">Assistant</p>
+                          <p className="text-small font-medium">{t('agentsPage.assistant')}</p>
                           <p className="text-small p-2 bg-default-100 rounded-md">Based on the Q2 sales data, your top selling products were:
 1. Product X - $450K (22% of revenue)
 2. Product Y - $320K (16% of revenue)
@@ -219,24 +221,24 @@ Product X showed the strongest growth at 28% YoY. Would you like more details on
               >
                 <div className="space-y-4 p-2">
                   <Select
-                    label="Vector Database"
-                    placeholder="Select vector database"
+                    label={t('agentsPage.vectorDatabase')}
+                    placeholder={t('agentsPage.selectVectorDatabase')}
                     defaultSelectedKeys={["pinecone"]}
                   >
-                    <SelectItem key="pinecone" value="pinecone">Pinecone</SelectItem>
-                    <SelectItem key="qdrant" value="qdrant">Qdrant</SelectItem>
-                    <SelectItem key="weaviate" value="weaviate">Weaviate</SelectItem>
-                    <SelectItem key="redis" value="redis">Redis</SelectItem>
+                    <SelectItem key="pinecone">Pinecone</SelectItem>
+                    <SelectItem key="qdrant">Qdrant</SelectItem>
+                    <SelectItem key="weaviate">Weaviate</SelectItem>
+                    <SelectItem key="redis">Redis</SelectItem>
                   </Select>
                   
                   <Select
-                    label="Embedding Model"
-                    placeholder="Select embedding model"
+                    label={t('agentsPage.embeddingModel')}
+                    placeholder={t('agentsPage.selectEmbeddingModel')}
                     defaultSelectedKeys={["openai"]}
                   >
-                    <SelectItem key="openai" value="openai">OpenAI Embeddings</SelectItem>
-                    <SelectItem key="cohere" value="cohere">Cohere Embeddings</SelectItem>
-                    <SelectItem key="huggingface" value="huggingface">HuggingFace Embeddings</SelectItem>
+                    <SelectItem key="openai">OpenAI Embeddings</SelectItem>
+                    <SelectItem key="cohere">Cohere Embeddings</SelectItem>
+                    <SelectItem key="huggingface">HuggingFace Embeddings</SelectItem>
                   </Select>
                   
                   <div>
@@ -297,13 +299,13 @@ Product X showed the strongest growth at 28% YoY. Would you like more details on
                     <Card className="mb-4">
                       <CardBody className="gap-3">
                         <Select
-                          label="Memory Type"
-                          placeholder="Select memory type"
+                          label={t('agentsPage.memoryType')}
+                          placeholder={t('agentsPage.selectMemoryType')}
                           defaultSelectedKeys={["conversation"]}
                         >
-                          <SelectItem key="conversation" value="conversation">Conversation History</SelectItem>
-                          <SelectItem key="summary" value="summary">Summary Memory</SelectItem>
-                          <SelectItem key="buffer" value="buffer">Buffer Memory</SelectItem>
+                          <SelectItem key="conversation">{t('agentsPage.conversationHistory')}</SelectItem>
+                          <SelectItem key="summary">{t('agentsPage.summaryMemory')}</SelectItem>
+                          <SelectItem key="buffer">{t('agentsPage.bufferMemory')}</SelectItem>
                         </Select>
                         
                         <Input

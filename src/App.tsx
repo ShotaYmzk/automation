@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Suspense } from 'react'; // Suspense をインポート
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next'; // useTranslation をインポート
 
 // Layouts
 import MainLayout from './layouts/main-layout';
@@ -38,19 +39,28 @@ const pageTransition = {
   duration: 0.15,
 };
 
+// ラッパーコンポーネントを作成して Suspense を適用
+const AnimatedPage: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <motion.div
+    initial="initial"
+    animate="in"
+    exit="out"
+    variants={pageVariants}
+    transition={pageTransition}
+  >
+    {children}
+  </motion.div>
+);
+
 function App() {
+  const { t } = useTranslation(); // fallback UI用に t を取得
+
   return (
+    // Suspense は main.tsx に移動しました。App全体で言語ファイルがロードされるのを待つため。
+    // ここでの Suspense はルーティングごとのコンポーネント遅延ロード用（もしあれば）
     <Switch>
       <Route path="/onboarding">
-        <motion.div
-          initial="initial"
-          animate="in"
-          exit="out"
-          variants={pageVariants}
-          transition={pageTransition}
-        >
-          <Onboarding />
-        </motion.div>
+        <AnimatedPage><Onboarding /></AnimatedPage>
       </Route>
       
       <Route path="/">
@@ -60,103 +70,31 @@ function App() {
               <Redirect to="/dashboard" />
             </Route>
             <Route path="/dashboard">
-              <motion.div
-                initial="initial"
-                animate="in"
-                exit="out"
-                variants={pageVariants}
-                transition={pageTransition}
-              >
-                <Dashboard />
-              </motion.div>
+              <AnimatedPage><Dashboard /></AnimatedPage>
             </Route>
             <Route path="/builder">
-              <motion.div
-                initial="initial"
-                animate="in"
-                exit="out"
-                variants={pageVariants}
-                transition={pageTransition}
-              >
-                <Builder />
-              </motion.div>
+              <AnimatedPage><Builder /></AnimatedPage>
             </Route>
             <Route path="/connectors">
-              <motion.div
-                initial="initial"
-                animate="in"
-                exit="out"
-                variants={pageVariants}
-                transition={pageTransition}
-              >
-                <Connectors />
-              </motion.div>
+              <AnimatedPage><Connectors /></AnimatedPage>
             </Route>
             <Route path="/templates">
-              <motion.div
-                initial="initial"
-                animate="in"
-                exit="out"
-                variants={pageVariants}
-                transition={pageTransition}
-              >
-                <Templates />
-              </motion.div>
+              <AnimatedPage><Templates /></AnimatedPage>
             </Route>
             <Route path="/agents">
-              <motion.div
-                initial="initial"
-                animate="in"
-                exit="out"
-                variants={pageVariants}
-                transition={pageTransition}
-              >
-                <Agents />
-              </motion.div>
+              <AnimatedPage><Agents /></AnimatedPage>
             </Route>
             <Route path="/runs-logs">
-              <motion.div
-                initial="initial"
-                animate="in"
-                exit="out"
-                variants={pageVariants}
-                transition={pageTransition}
-              >
-                <RunsLogs />
-              </motion.div>
+              <AnimatedPage><RunsLogs /></AnimatedPage>
             </Route>
             <Route path="/cost-analytics">
-              <motion.div
-                initial="initial"
-                animate="in"
-                exit="out"
-                variants={pageVariants}
-                transition={pageTransition}
-              >
-                <CostAnalytics />
-              </motion.div>
+              <AnimatedPage><CostAnalytics /></AnimatedPage>
             </Route>
             <Route path="/settings">
-              <motion.div
-                initial="initial"
-                animate="in"
-                exit="out"
-                variants={pageVariants}
-                transition={pageTransition}
-              >
-                <Settings />
-              </motion.div>
+              <AnimatedPage><Settings /></AnimatedPage>
             </Route>
             <Route path="/help">
-              <motion.div
-                initial="initial"
-                animate="in"
-                exit="out"
-                variants={pageVariants}
-                transition={pageTransition}
-              >
-                <Help />
-              </motion.div>
+              <AnimatedPage><Help /></AnimatedPage>
             </Route>
           </Switch>
         </MainLayout>
