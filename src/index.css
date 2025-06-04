@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.react-flow__node {
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+  color: #111827;
+  text-align: center;
+  border: 1px solid #e4e4e7;
+  background-color: white;
+  width: 180px;
+}
+
+.react-flow__node-input {
+  background-color: #EFF6FF;
+  border-color: #BFDBFE;
+}
+
+.react-flow__node-output {
+  background-color: #F0FDF4;
+  border-color: #A7F3D0;
+}
+
+.react-flow__node-default {
+  background-color: #FFFFFF;
+  border-color: #E4E4E7;
+}
+
+.react-flow__handle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #2563EB;
+}
+
+.react-flow__edge-path {
+  stroke: #a1a1aa;
+  stroke-width: 2;
+}
+
+.react-flow__controls {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  border-radius: 8px;
+}
+
+.react-flow__attribution {
+  display: none;
+}
+
+.nodrag {
+  cursor: pointer;
+}
